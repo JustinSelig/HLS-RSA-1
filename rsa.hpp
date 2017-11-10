@@ -67,3 +67,11 @@ int encrypt(int plaintext, public_key *pk);
 // @param[out] : int    - ciphertext int
 //
 int decrypt(int cyphertext, private_key *sk);
+
+/**
+ * Takes a base number and raises it to a given power.
+ * @param base - The base to be raised to a power
+ * @param power - The power the base should be raised to
+ * @return - base ** power
+ */
+int power(int base, int power);
