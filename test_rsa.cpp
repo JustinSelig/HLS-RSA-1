@@ -7,7 +7,7 @@ int main() {
     std::mt19937_64 rng(std::chrono::system_clock::now().time_since_epoch().count());
     // Arrays are related via index
     int toEnc[NUM_TESTS];
-    int encrypted[NUM_TEST];
+    int encrypted[NUM_TESTS];
     int decrypted[NUM_TESTS];
     public_key_t *publicKeys[NUM_TESTS];
     private_key_t *private_keys[NUM_TESTS];
@@ -19,23 +19,23 @@ int main() {
         // Get random message to encrypt
     }
 
-    Timer encTime("Encryption time");
-    Timer decTime("Decryption time");
+    Timer encTimer("Encryption time");
+    Timer decTimer("Decryption time");
 
     // Encrypt our values
     encTimer.start();
 
     for (int i = 0; i < NUM_TESTS; i++) {
-        encypted[i] = encrypt(toEnc[i], publicKeys[i]);
+        encrypted[i] = encrypt(toEnc[i], publicKeys[i]);
     }
     encTimer.stop();
 
-    decTime.start();
+    decTimer.start();
     // Decrypt values
     for (int i = 0; i < NUM_TESTS; i++) {
-        decrypted[i] = decrypt(encrypted[i], privateKeys[i]);
+        decrypted[i] = decrypt(encrypted[i], private_keys[i]);
     }
-    decTime.stop();
+    decTimer.stop();
 
     // Verify values
     int numWrong = 0;
