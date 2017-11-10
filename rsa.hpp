@@ -1,3 +1,6 @@
+#ifndef __RSA_HPP__
+#define __RSA_HPP__
+
 /**
  * RSA implementation for ECE 5770 Final Project
  */
@@ -75,3 +78,5 @@ int decrypt(int cyphertext, private_key *sk);
  * @return - base ** power
  */
 int power(int base, int power);
+
+#endif /* __RSA_HPP__ */

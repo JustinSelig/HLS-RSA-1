@@ -1,9 +1,4 @@
-#include "rsa.hpp"
-
-#include <chrono>
-#include <iostream>
-#include <random>
-#include "timer.h"
+#include "test_rsa.hpp"
 
 #define NUM_TESTS (100)
 
