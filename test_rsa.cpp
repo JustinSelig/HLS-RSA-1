@@ -4,19 +4,26 @@
 
 int main() {
     // Initialize our rng
-    std::mt19937_64 rng(std::chrono::system_clock::now().time_since_epoch().count());
+    std::mt19937 rng(std::chrono::system_clock::now().time_since_epoch().count());
     // Arrays are related via index
     int toEnc[NUM_TESTS];
     int encrypted[NUM_TESTS];
     int decrypted[NUM_TESTS];
-    public_key_t publicKeys[NUM_TESTS];
-    private_key_t private_keys[NUM_TESTS];
-    // array of corresponding public keys
-    // array of corresponding private keys
+    // Initialize keys
+    public_key_t publicKeys = {0, 0};
+    private_key_t private_keys = {0, 0, 0, 0, 0};
+
+    // Generate keys
+    int rc = key_gen(&publicKeys, &private_keys);
+
+    if (rc != 0) {
+        std::cout << "Key generation failed" << std::endl;
+        return 1;
+    }
 
     for (int i = 0; i < NUM_TESTS; i++) {
-        // Generate key pairs
         // Get random message to encrypt
+        toEnc[i] = rng();
     }
 
     Timer encTimer("Encryption time");
@@ -26,14 +33,14 @@ int main() {
     encTimer.start();
 
     for (int i = 0; i < NUM_TESTS; i++) {
-        encrypted[i] = encrypt(toEnc[i], &publicKeys[i]);
+        encrypted[i] = encrypt(toEnc[i], &publicKeys);
     }
     encTimer.stop();
 
     decTimer.start();
     // Decrypt values
     for (int i = 0; i < NUM_TESTS; i++) {
-        decrypted[i] = decrypt(encrypted[i], &private_keys[i]);
+        decrypted[i] = decrypt(encrypted[i], &private_keys);
     }
     decTimer.stop();
 
@@ -46,6 +53,6 @@ int main() {
     }
 
     if (numWrong > 0) {
-        std::cout << "There are " << numWrong << "encryption/decryptions" << std::endl;
+        std::cout << "There are " << numWrong << " wrong encryption/decryptions" << std::endl;
     }
 }
