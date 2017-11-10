@@ -3,14 +3,14 @@
  */
 
 //Public key struct
-typedef struct 
+typedef struct
 {
-	//mod
+    //mod
     int n;
-	
-	//exponent
+
+    //exponent
     int e;
-	
+
 } public_key;
 
 //Private key struct
@@ -18,22 +18,22 @@ typedef struct
 {
     //modulus
     int n;
-	
-	//public exponent
+
+    //public exponent
     int e;
-	
-	//private exponent
-	int d;
-	
-	//prime 1
-	int p;
-	
-	//prime 2
-	int q;
+
+    //private exponent
+    int d;
+
+    //prime 1
+    int p;
+
+    //prime 2
+    int q;
 
 } private_key;
- 
- 
+
+
 //----------------------------------------------------------
 // key_gen
 //
