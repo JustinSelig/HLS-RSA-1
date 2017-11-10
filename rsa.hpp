@@ -60,7 +60,7 @@ int key_gen(public_key * pk, private_key *sk);
 // @param[in]  : sk - private (secret) key struct generated
 // @param[out] : int    - ciphertext int
 //
-int encrypt(int plaintext, public_key *pk);
+int encrypt(int plaintext, public_key_t *pk);
 
 //----------------------------------------------------------
 // decrypt
@@ -71,7 +71,7 @@ int encrypt(int plaintext, public_key *pk);
 // @param[in]  : sk - private (secret) key struct generated
 // @param[out] : int    - ciphertext int
 //
-int decrypt(int cyphertext, private_key *sk);
+int decrypt(int cyphertext, private_key_t *sk);
 
 /**
  * Takes a base number and raises it to a given power.

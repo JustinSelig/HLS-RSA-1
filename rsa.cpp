@@ -39,7 +39,7 @@ int get_prime(int lower, int upper)
 }
 
 //ref: https://www.thecrazyprogrammer.com/2017/03/rsa-algorithm.html
-int key_gen(public_key * pk, private_key *sk)
+int key_gen(public_key *pk, private_key *sk)
 {
         //generate private key
     int p = get_prime(0, 50);
@@ -78,14 +78,14 @@ int key_gen(public_key * pk, private_key *sk)
         pk->e = e;
 }
 
-int encrypt(int plaintext, public_key *pk)
+int encrypt(int plaintext, public_key_t *pk)
 {
     return power(plaintext, pk->e) % pk->n;
 }
 
-int decrypt(int cyphertext, private_key *sk)
+int decrypt(int cyphertext, private_key_t *sk)
 {
-    return power(cyphertext, sk->d) % sk->n
+    return power(cyphertext, sk->d) % sk->n;
 }
 
 int power(int base, int power) {
