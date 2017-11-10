@@ -9,8 +9,8 @@ int main() {
     int toEnc[NUM_TESTS];
     int encrypted[NUM_TESTS];
     int decrypted[NUM_TESTS];
-    public_key_t *publicKeys[NUM_TESTS];
-    private_key_t *private_keys[NUM_TESTS];
+    public_key_t publicKeys[NUM_TESTS];
+    private_key_t private_keys[NUM_TESTS];
     // array of corresponding public keys
     // array of corresponding private keys
 
@@ -26,14 +26,14 @@ int main() {
     encTimer.start();
 
     for (int i = 0; i < NUM_TESTS; i++) {
-        encrypted[i] = encrypt(toEnc[i], publicKeys[i]);
+        encrypted[i] = encrypt(toEnc[i], &publicKeys[i]);
     }
     encTimer.stop();
 
     decTimer.start();
     // Decrypt values
     for (int i = 0; i < NUM_TESTS; i++) {
-        decrypted[i] = decrypt(encrypted[i], private_keys[i]);
+        decrypted[i] = decrypt(encrypted[i], &private_keys[i]);
     }
     decTimer.stop();
 
