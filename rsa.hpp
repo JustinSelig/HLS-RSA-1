@@ -5,6 +5,8 @@
  * RSA implementation for ECE 5770 Final Project
  */
 
+#include <stdlib.h>
+
 //Public key struct
 typedef struct public_key
 {

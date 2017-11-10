@@ -3,27 +3,48 @@
 int gcd(int a, int h) {
     int temp;
     while(1) {
-            temp = a % h;
-                if (temp == 0) {
-                    return h;
-                }
-                a = h;
-                h = temp;
+        temp = a % h;
+        if (temp == 0) {
+            return h;
         }
+        a = h;
+        h = temp;
+    }
 }
 
-int get_prime()
+//ref: https://math.stackexchange.com/questions/424238/random-primes-between-4000000000-and-4294967291-c
+int is_prime(int n) {
+    if(n%3==0) return n==3;
+    int p = 5;
+    while (p*p <= n) {
+        if (n%p==0) return 0;
+        p += 2;
+        if (n%p==0) return 0;
+        p += 4;
+    }
+    return 1;
+}
+
+//generates random prime number in range [lower,upper]
+int get_prime(int lower, int upper)
 {
-
+    int spread = upper - lower + 1;
+    while (1) {
+	    int p = 1 | (rand() % spread + lower);
+        if (is_prime(p)) {
+		    return p;
+		}
+	}
 
 }
 
+//ref: https://www.thecrazyprogrammer.com/2017/03/rsa-algorithm.html
 int key_gen(public_key * pk, private_key *sk)
 {
         //generate private key
-    int p = get_prime();
-        int q = get_prime();
-        int n = p * q;
+    int p = get_prime(0, 50);
+    int q = get_prime(0, 50);
+    int n = p * q;
     int totient = (p-1)*(q-1); //phi
 
         //calculate  e
