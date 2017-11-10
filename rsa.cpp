@@ -76,6 +76,7 @@ int key_gen(public_key *pk, private_key *sk)
         //set public key values
         pk->n = n;
         pk->e = e;
+        return 0;
 }
 
 int encrypt(int plaintext, public_key_t *pk)
