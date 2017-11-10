@@ -30,11 +30,11 @@ int get_prime(int lower, int upper)
 {
     int spread = upper - lower + 1;
     while (1) {
-	    int p = 1 | (rand() % spread + lower);
+        int p = 1 | (rand() % spread + lower);
         if (is_prime(p)) {
-		    return p;
-		}
-	}
+            return p;
+        }
+    }
 
 }
 
