@@ -14,6 +14,8 @@ int main() {
     int toEnc[NUM_TESTS];
     int encrypted[NUM_TEST];
     int decrypted[NUM_TESTS];
+	public_key_t *publicKeys[NUM_TESTS];
+	private_key_t *private_keys[NUM_TESTS];
     // array of corresponding public keys
     // array of corresponding private keys
 
