@@ -81,22 +81,34 @@ int key_gen(public_key *pk, private_key *sk)
 
 int encrypt(int plaintext, public_key_t *pk)
 {
-    return power(plaintext, pk->e) % pk->n;
+    return power(plaintext, pk->e, pk->n);
 }
 
 int decrypt(int cyphertext, private_key_t *sk)
 {
-    return power(cyphertext, sk->d) % sk->n;
+    return power(cyphertext, sk->d, sk->n);
 }
 
-int power(int base, int power) {
-    if (power == 0) {
-        return 1;
-    } else {
-        int sum = base;
-        for (int i = 1; i < power; i++) {
-            sum *= base;
+int modMul(int a, int b, int m) {
+    long double x;
+    int c;
+    int r;
+    if (a >= m) a %= m;
+    if (b >= m) b %= m;
+    x = a;
+    c = x * b / m;
+    r = (int)(a * b - c * m) % (int)m;
+    return r < 0 ? r + m : r;
+}
+
+int power(int base, int power, int mod) {
+    int r = 1;
+    while (power > 0) {
+        if (power % 2 == 1) {
+            r = modMul(r, base, mod);
         }
-        return sum;
+        power = power >> 1;
+        base = modMul(base, base, mod);
     }
+    return r;
 }

@@ -79,6 +79,6 @@ int decrypt(int cyphertext, private_key_t *sk);
  * @param power - The power the base should be raised to
  * @return - base ** power
  */
-int power(int base, int power);
+int power(int base, int power, int mod);
 
 #endif /* __RSA_HPP__ */
