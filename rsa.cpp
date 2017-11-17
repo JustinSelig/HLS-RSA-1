@@ -1,5 +1,36 @@
 #include "rsa.hpp"
 
+
+//----------------------------------------------------------
+// Top function
+//----------------------------------------------------------
+
+void dut(
+    hls::stream<bit32_t> &strm_in,
+    hls::stream<bit32_t> &strm_out
+)
+{
+  digit digit;
+  bit4_t nearest;
+  bit32_t result[576];
+
+  bit32_t input_lo = strm_in.read();
+  bit32_t input_hi = strm_in.read();
+  
+  // read two 32-bit input words into digit
+  digit(31, 0) = input_lo(31,0);
+  digit(48,32) = input_hi(16,0);
+
+  // call digitrec
+  //cnn_xcel(digit, result);
+
+  // write out the result
+  for (int i = 0; i < 576; i++)
+    strm_out.write(result[i]);
+}
+
+
+
 int gcd(int a, int h) {
     int temp;
     while(1) {

@@ -4,7 +4,7 @@
 
 int main() {
     // Initialize our rng
-    std::mt19937 rng(std::chrono::system_clock::now().time_since_epoch().count());
+    //std::mt19937 rng(std::chrono::system_clock::now().time_since_epoch().count());
     // Arrays are related via index
     int toEnc[NUM_TESTS];
     int encrypted[NUM_TESTS];
@@ -23,7 +23,7 @@ int main() {
 
     for (int i = 0; i < NUM_TESTS; i++) {
         // Get random message to encrypt
-        toEnc[i] = rng();
+        //toEnc[i] = rng();
     }
 
     Timer encTimer("Encryption time");

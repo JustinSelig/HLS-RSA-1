@@ -6,6 +6,8 @@
  */
 
 #include <stdlib.h>
+#include <hls_stream.h>
+#include "typedefs.h"
 
 //Public key struct
 typedef struct public_key
