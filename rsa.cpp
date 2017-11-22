@@ -115,9 +115,31 @@ int encrypt(int plaintext, public_key_t *pk)
     return power(plaintext, pk->e) % pk->n;
 }
 
+// Iterative Function to calculate (x^y)%p in O(log y) 
+// Source: http://www.geeksforgeeks.org/modular-exponentiation-power-in-modular-arithmetic/
+int power2(int x, int y, int p)
+{
+    int res = 1;      // Initialize result
+ 
+    x = x % p;  // Update x if it is more than or 
+                // equal to p
+ 
+    while (y > 0)
+    {
+        // If y is odd, multiply x with result
+        if (y & 1)
+            res = (res*x) % p;
+ 
+        // y must be even now
+        y = y>>1; // y = y/2
+        x = (x*x) % p;  
+    }
+    return res;
+}
+
 int decrypt(int cyphertext, private_key_t *sk)
 {
-    return power(cyphertext, sk->d) % sk->n;
+    return power2(cyphertext, sk->d, sk->n);
 }
 
 int power(int base, int power) {
@@ -130,4 +152,26 @@ int power(int base, int power) {
         }
         return sum;
     }
+}
+
+// Iterative Function to calculate (x^y)%p in O(log y) 
+// Source: http://www.geeksforgeeks.org/modular-exponentiation-power-in-modular-arithmetic/
+int power2(int x, unsigned int y, int p)
+{
+    int res = 1;      // Initialize result
+ 
+    x = x % p;  // Update x if it is more than or 
+                // equal to p
+ 
+    while (y > 0)
+    {
+        // If y is odd, multiply x with result
+        if (y & 1)
+            res = (res*x) % p;
+ 
+        // y must be even now
+        y = y>>1; // y = y/2
+        x = (x*x) % p;  
+    }
+    return res;
 }
