@@ -24,6 +24,7 @@ int main() {
     for (int i = 0; i < NUM_TESTS; i++) {
         // Get random message to encrypt
         //toEnc[i] = rng();
+        toEnc[i] = rand() % 10; //random int from 0-9
     }
 
     Timer encTimer("Encryption time");
