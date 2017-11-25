@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <hls_stream.h>
 #include "typedefs.h"
+//#include "hls_math.h"
 
 //Public key struct
 typedef struct public_key
@@ -83,4 +84,7 @@ int decrypt(int cyphertext, private_key_t *sk);
  */
 int power(int base, int power);
 
+int power2(int x, unsigned int y, int p);
+
+void dut(hls::stream<bit32_t> &strm_in, hls::stream<bit32_t> &strm_out);
 #endif /* __RSA_HPP__ */
