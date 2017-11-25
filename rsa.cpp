@@ -10,23 +10,22 @@ void dut(
     hls::stream<bit32_t> &strm_out
 )
 {
-  digit digit;
-  bit4_t nearest;
-  bit32_t result[576];
+  int msg;
+  int exp;
+  int key;
 
-  bit32_t input_lo = strm_in.read();
-  bit32_t input_hi = strm_in.read();
+  bit32_t input_msg = strm_in.read();
+  bit32_t input_exp = strm_in.read();
+  bit32_t input_key = strm_in.read();
   
   // read two 32-bit input words into digit
-  digit(31, 0) = input_lo(31,0);
-  digit(48,32) = input_hi(16,0);
+  msg = input_msg;
+  exp = input_exp;
+  key = input_key;
 
-  // call digitrec
-  //cnn_xcel(digit, result);
-
+  int result = power2(msg, exp, key);
   // write out the result
-  for (int i = 0; i < 576; i++)
-    strm_out.write(result[i]);
+  strm_out.write(result);
 }
 
 
@@ -112,29 +111,7 @@ int key_gen(public_key *pk, private_key *sk)
 
 int encrypt(int plaintext, public_key_t *pk)
 {
-    return power(plaintext, pk->e) % pk->n;
-}
-
-// Iterative Function to calculate (x^y)%p in O(log y) 
-// Source: http://www.geeksforgeeks.org/modular-exponentiation-power-in-modular-arithmetic/
-int power2(int x, int y, int p)
-{
-    int res = 1;      // Initialize result
- 
-    x = x % p;  // Update x if it is more than or 
-                // equal to p
- 
-    while (y > 0)
-    {
-        // If y is odd, multiply x with result
-        if (y & 1)
-            res = (res*x) % p;
- 
-        // y must be even now
-        y = y>>1; // y = y/2
-        x = (x*x) % p;  
-    }
-    return res;
+  return power2(plaintext, pk->e, pk->n);
 }
 
 int decrypt(int cyphertext, private_key_t *sk)
@@ -162,9 +139,11 @@ int power2(int x, unsigned int y, int p)
  
     x = x % p;  // Update x if it is more than or 
                 // equal to p
- 
-    while (y > 0)
+    //    int trips = hls::log10((float)y) * 3.3;
+
+ L1 : while (y > 0)
     {
+#pragma HLS loop_tripcount max=32
         // If y is odd, multiply x with result
         if (y & 1)
             res = (res*x) % p;

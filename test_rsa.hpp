@@ -10,5 +10,6 @@
 
 //#include "timer.hpp"
 #include "timer.h"
+#include "typedefs.h"
 
 #endif /* __TEST_HPP__ */

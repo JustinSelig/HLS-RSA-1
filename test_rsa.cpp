@@ -1,6 +1,5 @@
 #include "test_rsa.hpp"
 
-#define NUM_TESTS (100)
 
 int main() {
     // Initialize our rng
@@ -12,6 +11,10 @@ int main() {
     // Initialize keys
     public_key_t publicKeys = {0, 0};
     private_key_t private_keys = {0, 0, 0, 0, 0};
+
+    // HLS streams for communicating with the enc block
+    hls::stream<bit32_t> rsa_in;
+    hls::stream<bit32_t> rsa_out;
 
     // Generate keys
     int rc = key_gen(&publicKeys, &private_keys);
@@ -33,15 +36,36 @@ int main() {
     // Encrypt our values
     encTimer.start();
 
+    // Send data to be encrypted
     for (int i = 0; i < NUM_TESTS; i++) {
-        encrypted[i] = encrypt(toEnc[i], &publicKeys);
+      rsa_in.write(toEnc[i]);
+      rsa_in.write(publicKeys.e);
+      rsa_in.write(publicKeys.n);
+      //      encrypted[i] = encrypt(toEnc[i], &publicKeys);
+    }
+
+    // Get our encryped values back
+    for (int i = 0; i < NUM_TESTS; i++) {
+      dut(rsa_in, rsa_out);
+
+      // Read and store result
+      encrypted[i] = rsa_out.read();
     }
     encTimer.stop();
-
+    
     decTimer.start();
-    // Decrypt values
+    // Send values to be decrypted
     for (int i = 0; i < NUM_TESTS; i++) {
-        decrypted[i] = decrypt(encrypted[i], &private_keys);
+      rsa_in.write(encrypted[i]);
+      rsa_in.write(private_keys.d);
+      rsa_in.write(private_keys.n);
+      //      decrypted[i] = decrypt(encrypted[i], &private_keys);
+    }
+
+    // retrieve decrypted values
+    for (int i = 0; i < NUM_TESTS; i++) {
+      dut(rsa_in, rsa_out);
+      decrypted[i] = rsa_out.read();
     }
     decTimer.stop();
 
