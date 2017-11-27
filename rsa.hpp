@@ -14,10 +14,10 @@
 typedef struct public_key
 {
     //mod
-    int n;
+    rsa_t n;
 
     //exponent
-    int e;
+    rsa_t e;
 
 } public_key_t;
 
@@ -25,19 +25,19 @@ typedef struct public_key
 typedef struct private_key
 {
     //modulus
-    int n;
+    rsa_t n;
 
     //public exponent
-    int e;
+    rsa_t e;
 
     //private exponent
-    int d;
+    rsa_t d;
 
     //prime 1
-    int p;
+    rsa_t p;
 
     //prime 2
-    int q;
+    rsa_t q;
 
 } private_key_t;
 
@@ -63,7 +63,7 @@ int key_gen(public_key * pk, private_key *sk);
 // @param[in]  : sk - private (secret) key struct generated
 // @param[out] : int    - ciphertext int
 //
-int encrypt(int plaintext, public_key_t *pk);
+int encrypt(rsa_t plaintext, public_key_t *pk);
 
 //----------------------------------------------------------
 // decrypt
@@ -74,7 +74,7 @@ int encrypt(int plaintext, public_key_t *pk);
 // @param[in]  : sk - private (secret) key struct generated
 // @param[out] : int    - ciphertext int
 //
-int decrypt(int cyphertext, private_key_t *sk);
+int decrypt(rsa_t cyphertext, private_key_t *sk);
 
 /**
  * Takes a base number and raises it to a given power.
@@ -84,7 +84,7 @@ int decrypt(int cyphertext, private_key_t *sk);
  */
 int power(int base, int power);
 
-int power2(int x, unsigned int y, int p);
+int power2(rsa_t x, rsa_t y, rsa_t p);
 
 void dut(hls::stream<bit32_t> &strm_in, hls::stream<bit32_t> &strm_out);
 #endif /* __RSA_HPP__ */

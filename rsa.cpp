@@ -10,28 +10,28 @@ void dut(
     hls::stream<bit32_t> &strm_out
 )
 {
-  int msg;
-  int exp;
-  int key;
+  rsa_t msg;
+  rsa_t exp;
+  rsa_t key;
 
   bit32_t input_msg = strm_in.read();
   bit32_t input_exp = strm_in.read();
   bit32_t input_key = strm_in.read();
-  
+
   // read two 32-bit input words into digit
   msg = input_msg;
   exp = input_exp;
   key = input_key;
 
-  int result = power2(msg, exp, key);
+  rsa_t result = power2(msg, exp, key);
   // write out the result
   strm_out.write(result);
 }
 
 
 
-int gcd(int a, int h) {
-    int temp;
+int gcd(rsa_t a, rsa_t h) {
+    rsa_t temp;
     while(1) {
         temp = a % h;
         if (temp == 0) {
@@ -43,9 +43,9 @@ int gcd(int a, int h) {
 }
 
 //ref: https://math.stackexchange.com/questions/424238/random-primes-between-4000000000-and-4294967291-c
-int is_prime(int n) {
+int is_prime(rsa_t n) {
     if(n%3==0) return n==3;
-    int p = 5;
+    rsa_t p = 5;
     while (p*p <= n) {
         if (n%p==0) return 0;
         p += 2;
@@ -56,11 +56,11 @@ int is_prime(int n) {
 }
 
 //generates random prime number in range [lower,upper]
-int get_prime(int lower, int upper)
+rsa_t get_prime(rsa_t lower, rsa_t upper)
 {
-    int spread = upper - lower + 1;
+    rsa_t spread = upper - lower + 1;
     while (1) {
-        int p = 1 | (rand() % spread + lower);
+        rsa_t p = 1 | (rand() % spread + lower);
         if (is_prime(p)) {
             return p;
         }
@@ -72,14 +72,14 @@ int get_prime(int lower, int upper)
 int key_gen(public_key *pk, private_key *sk)
 {
         //generate private key
-    int p = get_prime(0, 50);
-    int q = get_prime(0, 50);
-    int n = p * q;
-    int totient = (p-1)*(q-1); //phi
+    rsa_t p = get_prime(0, 50);
+    rsa_t q = get_prime(0, 50);
+    rsa_t n = p * q;
+    rsa_t totient = (p-1)*(q-1); //phi
 
         //calculate  e
         int count;
-        int e = 2; //1 < e < totient
+        rsa_t e = 2; //1 < e < totient
         while (e < totient) {
             count = gcd(e, totient);
                 if (count == 1) {
@@ -91,10 +91,10 @@ int key_gen(public_key *pk, private_key *sk)
         }
 
         //choose arbitrary k
-        int k = 2;
+        rsa_t k = 2;
 
         //calculate modinv to get secret exponent
-        int d = (1 + (k * totient)) / e;
+        rsa_t d = (1 + (k * totient)) / e;
 
         //set secret key values
         sk->p = p;
@@ -109,12 +109,12 @@ int key_gen(public_key *pk, private_key *sk)
         return 0;
 }
 
-int encrypt(int plaintext, public_key_t *pk)
+int encrypt(rsa_t plaintext, public_key_t *pk)
 {
   return power2(plaintext, pk->e, pk->n);
 }
 
-int decrypt(int cyphertext, private_key_t *sk)
+int decrypt(rsa_t cyphertext, private_key_t *sk)
 {
     return power2(cyphertext, sk->d, sk->n);
 }
@@ -131,13 +131,13 @@ int power(int base, int power) {
     }
 }
 
-// Iterative Function to calculate (x^y)%p in O(log y) 
+// Iterative Function to calculate (x^y)%p in O(log y)
 // Source: http://www.geeksforgeeks.org/modular-exponentiation-power-in-modular-arithmetic/
-int power2(int x, unsigned int y, int p)
+int power2(rsa_t x, rsa_t y, rsa_t p)
 {
     int res = 1;      // Initialize result
- 
-    x = x % p;  // Update x if it is more than or 
+
+    x = x % p;  // Update x if it is more than or
                 // equal to p
     //    int trips = hls::log10((float)y) * 3.3;
 
@@ -147,10 +147,10 @@ int power2(int x, unsigned int y, int p)
         // If y is odd, multiply x with result
         if (y & 1)
             res = (res*x) % p;
- 
+
         // y must be even now
         y = y>>1; // y = y/2
-        x = (x*x) % p;  
+        x = (x*x) % p;
     }
     return res;
 }

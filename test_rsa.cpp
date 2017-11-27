@@ -5,9 +5,9 @@ int main() {
     // Initialize our rng
     //std::mt19937 rng(std::chrono::system_clock::now().time_since_epoch().count());
     // Arrays are related via index
-    int toEnc[NUM_TESTS];
-    int encrypted[NUM_TESTS];
-    int decrypted[NUM_TESTS];
+    rsa_t toEnc[NUM_TESTS];
+    rsa_t encrypted[NUM_TESTS];
+    rsa_t decrypted[NUM_TESTS];
     // Initialize keys
     public_key_t publicKeys = {0, 0};
     private_key_t private_keys = {0, 0, 0, 0, 0};

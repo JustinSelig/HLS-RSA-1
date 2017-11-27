@@ -19,6 +19,9 @@ typedef ap_fixed<11, 2> jss_type;
 
 typedef union {float f; int i;} union_f_i;
 
+// Type for RSA messages and keys
+typedef unsigned int rsa_t;
+
 #define NUM_TESTS (10000)
 
 #endif
