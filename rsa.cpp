@@ -109,12 +109,12 @@ int key_gen(public_key *pk, private_key *sk)
         return 0;
 }
 
-int encrypt(rsa_t plaintext, public_key_t *pk)
+rsa_t encrypt(rsa_t plaintext, public_key_t *pk)
 {
   return power2(plaintext, pk->e, pk->n);
 }
 
-int decrypt(rsa_t cyphertext, private_key_t *sk)
+rsa_t decrypt(rsa_t cyphertext, private_key_t *sk)
 {
     return power2(cyphertext, sk->d, sk->n);
 }
@@ -133,9 +133,9 @@ int power(int base, int power) {
 
 // Iterative Function to calculate (x^y)%p in O(log y)
 // Source: http://www.geeksforgeeks.org/modular-exponentiation-power-in-modular-arithmetic/
-int power2(rsa_t x, rsa_t y, rsa_t p)
+rsa_t power2(rsa_t x, rsa_t y, rsa_t p)
 {
-    int res = 1;      // Initialize result
+    rsa_t res = 1;      // Initialize result
 
     x = x % p;  // Update x if it is more than or
                 // equal to p
@@ -153,4 +153,28 @@ int power2(rsa_t x, rsa_t y, rsa_t p)
         x = (x*x) % p;
     }
     return res;
+}
+
+/*
+ * From https://rosettacode.org/wiki/Modular_inverse#C
+ */
+rsa_t mod_inv(rsa_t a, rsa_t b)
+{
+  rsa_t b0 = b, t, q;
+  rsa_t x0 = 0, x1 = 1;
+  if (b == 1) return 1;
+  while (a > 1) {
+    q = a / b;
+    t = b, b = a % b, a = t;
+    t = x0, x0 = x1 - q * x0, x1 = t;
+  }
+  if (x1 < 0) x1 += b0;
+  return x1;
+}
+
+rsa_t rsaCRT(rsa_t x, rsa_t p, rsa_t q, rsa_t dp, rsa_t dq, rsa_t qinv) {
+  rsa_t m1 = power2(x, dp, p);
+  rsa_t m2 = power2(x, dq, q);
+  rsa_t h = (qinv * (m1 - m2)) % p;
+  return m2 + h * q;
 }

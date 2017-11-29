@@ -63,7 +63,7 @@ int key_gen(public_key * pk, private_key *sk);
 // @param[in]  : sk - private (secret) key struct generated
 // @param[out] : int    - ciphertext int
 //
-int encrypt(rsa_t plaintext, public_key_t *pk);
+rsa_t encrypt(rsa_t plaintext, public_key_t *pk);
 
 //----------------------------------------------------------
 // decrypt
@@ -74,7 +74,7 @@ int encrypt(rsa_t plaintext, public_key_t *pk);
 // @param[in]  : sk - private (secret) key struct generated
 // @param[out] : int    - ciphertext int
 //
-int decrypt(rsa_t cyphertext, private_key_t *sk);
+rsa_t decrypt(rsa_t cyphertext, private_key_t *sk);
 
 /**
  * Takes a base number and raises it to a given power.
@@ -84,7 +84,11 @@ int decrypt(rsa_t cyphertext, private_key_t *sk);
  */
 int power(int base, int power);
 
-int power2(rsa_t x, rsa_t y, rsa_t p);
+rsa_t power2(rsa_t x, rsa_t y, rsa_t p);
+
+rsa_t rsaCRT(rsa_t x, rsa_t p, rsa_t q, rsa_t dp, rsa_t dq, rsa_t qinv);
+
+rsa_t mod_inv(rsa_t a, rsa_t b);
 
 void dut(hls::stream<bit32_t> &strm_in, hls::stream<bit32_t> &strm_out);
 #endif /* __RSA_HPP__ */
