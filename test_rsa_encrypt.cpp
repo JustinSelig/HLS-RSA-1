@@ -37,48 +37,41 @@ int main() {
     encTimer.start();
 
     // Send data to be encrypted
-    for (int i = 0; i < NUM_TESTS; i++) {
-      rsa_in.write(toEnc[i]);
-      rsa_in.write(publicKeys.e);
-      rsa_in.write(publicKeys.n);
-      //      encrypted[i] = encrypt(toEnc[i], &publicKeys);
+    
+
+
+    for (int j = 0; j < NUM_TESTS; j++) {
+
+      // Send the message to be encrypted
+      rsa_t sendMsg = toEnc[j];
+      for (int i = 0; i < KEY_SIZE / 32; i++) {
+	rsa_in.write(sendMsg((i + 1) * 32 - 1, i * 32));
+      }
+
+      // Send the exponent for encryption
+      rsa_t sendExp = publicKeys.e;
+      for (int i = 0; i < KEY_SIZE / 32; i++) {
+	rsa_in.write(sendExp((i + 1) * 32 - 1, i * 32));
+      }
+
+      // Send the modulus key for encryption
+      rsa_t sendKey = publicKeys.n;
+      for (int i = 0; i < KEY_SIZE / 32; i++) {
+	rsa_in.write(sendKey((i + 1) * 32 - 1, i * 32));
+      }
     }
 
     // Get our encryped values back
-    for (int i = 0; i < NUM_TESTS; i++) {
+
+    for (int j = 0; j < NUM_TESTS; j++) {
       dut(rsa_in, rsa_out);
 
       // Read and store result
-      encrypted[i] = rsa_out.read();
+      rsa_t result;
+      for (int i = 0; i < KEY_SIZE / 32; i++) {
+	result((i + 1) * 32 - 1, i * 32) = rsa_out.read();
+      }
+      encrypted[j] = result;
     }
     encTimer.stop();
-    /* 
-    decTimer.start();
-    // Send values to be decrypted
-    for (int i = 0; i < NUM_TESTS; i++) {
-      rsa_in.write(encrypted[i]);
-      rsa_in.write(private_keys.d);
-      rsa_in.write(private_keys.n);
-      //      decrypted[i] = decrypt(encrypted[i], &private_keys);
-    }
-
-    // retrieve decrypted values
-    for (int i = 0; i < NUM_TESTS; i++) {
-      dut(rsa_in, rsa_out);
-      decrypted[i] = rsa_out.read();
-    }
-    decTimer.stop();
-
-    // Verify values
-    int numWrong = 0;
-    for (int i = 0; i < NUM_TESTS; i++) {
-        if (toEnc[i] != decrypted[i]) {
-            numWrong++;
-        }
-    }
-
-    if (numWrong > 0) {
-        std::cout << "There are " << numWrong << " wrong encryption/decryptions" << std::endl;
-    }
-	*/
 }
