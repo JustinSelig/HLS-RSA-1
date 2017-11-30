@@ -19,8 +19,9 @@ typedef ap_fixed<11, 2> jss_type;
 
 typedef union {float f; int i;} union_f_i;
 
+#define KEY_SIZE (512)
 // Type for RSA messages and keys
-typedef ap_uint<1024> rsa_t;
+typedef ap_uint<KEY_SIZE> rsa_t;
 
 #define NUM_TESTS (10000)
 
