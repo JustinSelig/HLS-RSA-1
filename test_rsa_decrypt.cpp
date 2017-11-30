@@ -26,46 +26,48 @@ int main() {
 
     for (int i = 0; i < NUM_TESTS; i++) {
         // Get random message to encrypt
-        //toEnc[i] = rng();
         toEnc[i] = rand() % 10; //random int from 0-9
     }
 
-//    Timer encTimer("Encryption time");
     Timer decTimer("Decryption time");
-
-    // Encrypt our values
-//    encTimer.start();
 
     // Send data to be encrypted
     for (int i = 0; i < NUM_TESTS; i++) {
-//      rsa_in.write(toEnc[i]);
-//      rsa_in.write(publicKeys.e);
-//      rsa_in.write(publicKeys.n);
       encrypted[i] = encrypt(toEnc[i], &publicKeys);
     }
-
-    // Get our encryped values back
-//    for (int i = 0; i < NUM_TESTS; i++) {
-//      dut(rsa_in, rsa_out);
-
-      // Read and store result
-//      encrypted[i] = rsa_out.read();
-//    }
-//    encTimer.stop();
     
     decTimer.start();
     // Send values to be decrypted
-    for (int i = 0; i < NUM_TESTS; i++) {
-      rsa_in.write(encrypted[i]);
-      rsa_in.write(private_keys.d);
-      rsa_in.write(private_keys.n);
-      //      decrypted[i] = decrypt(encrypted[i], &private_keys);
+    for (int j = 0; j < NUM_TESTS; j++) {
+
+      // Send the message to be encrypted
+      rsa_t sendMsg = encrypted[j];
+      for (int i = 0; i < KEY_SIZE / 32; i++) {
+	rsa_in.write(sendMsg((i + 1) * 32 - 1, i * 32));
+      }
+
+      // Send the exponent for encryption
+      rsa_t sendExp = private_keys.d;
+      for (int i = 0; i < KEY_SIZE / 32; i++) {
+	rsa_in.write(sendExp((i + 1) * 32 - 1, i * 32));
+      }
+
+      // Send the modulus key for encryption
+      rsa_t sendKey = private_keys.n;
+      for (int i = 0; i < KEY_SIZE / 32; i++) {
+	rsa_in.write(sendKey((i + 1) * 32 - 1, i * 32));
+      }
     }
 
     // retrieve decrypted values
-    for (int i = 0; i < NUM_TESTS; i++) {
+    for (int j = 0; j < NUM_TESTS; j++) {
       dut(rsa_in, rsa_out);
-      decrypted[i] = rsa_out.read();
+      // Read and store result
+      rsa_t result;
+      for (int i = 0; i < KEY_SIZE / 32; i++) {
+	result((i + 1) * 32 - 1, i * 32) = rsa_out.read();
+      }
+      decrypted[j] = result;
     }
     decTimer.stop();
 
