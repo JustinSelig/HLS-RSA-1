@@ -21,6 +21,11 @@ csim: rsa.cpp test_rsa.cpp
 	g++ ${CFLAGS} $^ -o rsa -lrt
 	./rsa
 
+sw: rsa.cpp rsa_sw.cpp
+	@echo "Running pure software test"
+	g++ ${CFLAGS} $^ -o rsa-sw -lrt
+	./rsa-sw
+
 bitstream: 
 	@echo "Synthesizing rsa and creating bitstream on amdpool ..."
 	vivado_hls -f run.tcl
