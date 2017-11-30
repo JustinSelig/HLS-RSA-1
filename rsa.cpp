@@ -54,7 +54,7 @@ void dut_crt(
   dq = input_dq;
   qinv = input_qinv;
 
-  rsa_t result = power2(msg, p, q, dp, dq, qinv);
+  rsa_t result = rsaCRT(msg, p, q, dp, dq, qinv);
   // write out the result
   strm_out.write(result);
 }

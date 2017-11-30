@@ -64,7 +64,7 @@ int main() {
 
     // retrieve decrypted values
     for (int i = 0; i < NUM_TESTS; i++) {
-      dut(rsa_in, rsa_out);
+      dut_crt(rsa_in, rsa_out);
       decrypted[i] = rsa_out.read();
     }
     decTimer.stop();

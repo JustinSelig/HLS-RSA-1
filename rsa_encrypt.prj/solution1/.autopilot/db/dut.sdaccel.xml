@@ -1,0 +1,150 @@
+<profile>
+
+<section name = "Vivado HLS Report for 'dut'" level="0">
+<item name = "Date">Wed Nov 29 21:20:33 2017
+</item>
+<item name = "Version">2016.2 (Build 1577090 on Thu Jun 02 16:59:10 MDT 2016)</item>
+<item name = "Project">rsa_encrypt.prj</item>
+<item name = "Solution">solution1</item>
+<item name = "Product family">zynq</item>
+<item name = "Target device">xc7z020clg484-1</item>
+</section>
+
+<section name = "Performance Estimates" level="0">
+<item name = "Timing (ns)">
+<section name = "" level="1">
+<item name = "Target clock period (ns)">10.00</item>
+<item name = "Clock uncertainty (ns)">1.25</item>
+<item name = "Estimated clock period (ns)">10.70</item>
+</section>
+</item>
+<item name = "Latency (clock cycles)">
+<section name = "" level="1">
+<item name = "Summary"><table name="" hasTotal="0">
+<keys size="6">, min, max, min, max, Type</keys>
+<column name="">4, 1351, 5, 1352, none</column>
+</table>
+</item>
+<item name = "Detail">
+<section name = "" level="1">
+<item name = "Instance"><table name="" hasTotal="0">
+<keys size="7">Instance, Module, min, max, min, max, Type</keys>
+</table>
+</item>
+<item name = "Loop"><table name="" hasTotal="0">
+<keys size="8">Loop Name, min, max, Latency, achieved, target, Count, Pipelined</keys>
+<column name="- L1">0, 1347, 77, 41, 1, 0 ~ 32, yes</column>
+</table>
+</item>
+</section>
+</item>
+</section>
+</item>
+</section>
+
+<section name = "Utilization Estimates" level="0">
+<item name = "Summary"><table name="" hasTotal="1">
+<keys size="5">Name, BRAM_18K, DSP48E, FF, LUT</keys>
+<column name="DSP">-, -, -, -</column>
+<column name="Expression">-, -, 0, 12</column>
+<column name="FIFO">-, -, -, -</column>
+<column name="Instance">-, 8, 4000, 4000</column>
+<column name="Memory">-, -, -, -</column>
+<column name="Multiplexer">-, -, -, 240</column>
+<column name="Register">-, -, 337, -</column>
+<specialColumn name="Available">280, 220, 106400, 53200</specialColumn>
+<specialColumn name="Utilization (%)">0, 3, 4, 7</specialColumn>
+</table>
+</item>
+<item name = "Detail">
+<section name = "" level="1">
+<item name = "Instance"><table name="" hasTotal="1">
+<keys size="6">Instance, Module, BRAM_18K, DSP48E, FF, LUT</keys>
+<column name="dut_mul_32s_32s_32_6_U2">dut_mul_32s_32s_32_6, 0, 4, 0, 0</column>
+<column name="dut_mul_32s_32s_32_6_U3">dut_mul_32s_32s_32_6, 0, 4, 0, 0</column>
+<column name="dut_urem_32ns_32ns_32_36_U1">dut_urem_32ns_32ns_32_36, 0, 0, 2000, 2000</column>
+<column name="dut_urem_32ns_32ns_32_36_U4">dut_urem_32ns_32ns_32_36, 0, 0, 2000, 2000</column>
+</table>
+</item>
+<item name = "DSP48"><table name="" hasTotal="0">
+<keys size="3">Instance, Module, Expression</keys>
+</table>
+</item>
+<item name = "Memory"><table name="" hasTotal="1">
+<keys size="9">Memory, Module, BRAM_18K, FF, LUT, Words, Bits, Banks, W*Bits*Banks</keys>
+</table>
+</item>
+<item name = "FIFO"><table name="" hasTotal="1">
+<keys size="7">Name, BRAM_18K, FF, LUT, Depth, Bits, Size:D*B</keys>
+</table>
+</item>
+<item name = "Expression"><table name="" hasTotal="1">
+<keys size="7">Variable Name, Operation, DSP48E, FF, LUT, Bitwidth P0, Bitwidth P1</keys>
+<column name="tmp_i_fu_109_p2">icmp, 0, 0, 11, 32, 1</column>
+<column name="ap_sig_111">or, 0, 0, 1, 1, 1</column>
+</table>
+</item>
+<item name = "Multiplexer"><table name="" hasTotal="1">
+<keys size="5">Name, LUT, Input Size, Bits, Total Bits</keys>
+<column name="ap_NS_fsm">78, 46, 1, 46</column>
+<column name="p_i_phi_fu_84_p4">32, 2, 32, 64</column>
+<column name="p_i_reg_81">32, 2, 32, 64</column>
+<column name="strm_in_V_V_blk_n">1, 2, 1, 2</column>
+<column name="strm_out_V_V_blk_n">1, 2, 1, 2</column>
+<column name="tmp_V_fu_64">32, 2, 32, 64</column>
+<column name="x_pn_i_phi_fu_93_p4">32, 2, 32, 64</column>
+<column name="x_pn_i_reg_90">32, 2, 32, 64</column>
+</table>
+</item>
+<item name = "Register"><table name="" hasTotal="1">
+<keys size="5">Name, FF, LUT, Bits, Const Bits</keys>
+<column name="ap_CS_fsm">45, 0, 45, 0</column>
+<column name="ap_reg_ppiten_pp0_it0">1, 0, 1, 0</column>
+<column name="ap_reg_ppiten_pp0_it1">1, 0, 1, 0</column>
+<column name="ap_reg_ppstg_tmp_1_reg_186_pp0_iter1">1, 0, 1, 0</column>
+<column name="p_i_reg_81">32, 0, 32, 0</column>
+<column name="tmp_1_reg_186">1, 0, 1, 0</column>
+<column name="tmp_6_i_reg_207">32, 0, 32, 0</column>
+<column name="tmp_V_4_reg_166">32, 0, 32, 0</column>
+<column name="tmp_V_5_reg_171">32, 0, 32, 0</column>
+<column name="tmp_V_6_reg_176">32, 0, 32, 0</column>
+<column name="tmp_V_fu_64">32, 0, 32, 0</column>
+<column name="tmp_i_reg_182">1, 0, 1, 0</column>
+<column name="tmp_reg_190">31, 0, 32, 1</column>
+<column name="x_assign_1_reg_195">32, 0, 32, 0</column>
+<column name="x_pn_i_reg_90">32, 0, 32, 0</column>
+</table>
+</item>
+</section>
+</item>
+</section>
+
+<section name = "Interface" level="0">
+<item name = "Summary"><table name="" hasTotal="0">
+<keys size="6">RTL Ports, Dir, Bits, Protocol, Source Object, C Type</keys>
+<column name="ap_clk">in, 1, ap_ctrl_hs, dut, return value</column>
+<column name="ap_rst">in, 1, ap_ctrl_hs, dut, return value</column>
+<column name="ap_start">in, 1, ap_ctrl_hs, dut, return value</column>
+<column name="ap_done">out, 1, ap_ctrl_hs, dut, return value</column>
+<column name="ap_idle">out, 1, ap_ctrl_hs, dut, return value</column>
+<column name="ap_ready">out, 1, ap_ctrl_hs, dut, return value</column>
+<column name="strm_in_V_V_dout">in, 32, ap_fifo, strm_in_V_V, pointer</column>
+<column name="strm_in_V_V_empty_n">in, 1, ap_fifo, strm_in_V_V, pointer</column>
+<column name="strm_in_V_V_read">out, 1, ap_fifo, strm_in_V_V, pointer</column>
+<column name="strm_out_V_V_din">out, 32, ap_fifo, strm_out_V_V, pointer</column>
+<column name="strm_out_V_V_full_n">in, 1, ap_fifo, strm_out_V_V, pointer</column>
+<column name="strm_out_V_V_write">out, 1, ap_fifo, strm_out_V_V, pointer</column>
+</table>
+</item>
+</section>
+
+<section name = "Critical Path" level="0">
+<item name = "Max Delay">10.70</item>
+<item name = "Critical Path Table"><table name="Critical Path Table" hasTotal="0">
+<keys size="15">Name, Operator, Delay, Accumulated Delay, Store Source, Resource, Core, Interface, Type, Port, Array, Scope, Pointer, Callee, Phi Node</keys>
+<column name="'x', rsa.cpp:171->rsa.cpp:26">urem, 4.62, 4.62, -, -, -, -, -, -, -, -, -, -, -</column>
+<column name="'tmp_6_i', rsa.cpp:185->rsa.cpp:26">mul, 6.08, 10.70, -, -, -, -, -, -, -, -, -, -, -</column>
+</table>
+</item>
+</section>
+</profile>

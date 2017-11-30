@@ -1,0 +1,7 @@
+make[1]: Entering directory `/home/jss459/Documents/ECE5770/HLS-RSA/rsa_encrypt.prj/solution1/csim/build'
+   Compiling ../../../../test_rsa_encrypt.cpp in release mode
+   Compiling ../../../../rsa.cpp in release mode
+   Generating csim.exe
+make[1]: Leaving directory `/home/jss459/Documents/ECE5770/HLS-RSA/rsa_encrypt.prj/solution1/csim/build'
+Encryption time     :      1 calls;   0.607 msecs total time
+INFO: [SIM 1] CSim done with 0 errors.
