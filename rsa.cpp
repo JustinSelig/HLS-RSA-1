@@ -34,19 +34,27 @@ void dut_crt(
 )
 {
   rsa_t msg;
-  rsa_t exp;
-  rsa_t key;
+  rsa_t p;
+  rsa_t q;
+  rsa_t dp;
+  rsa_t dq;
+  rsa_t qinv;
 
   bit32_t input_msg = strm_in.read();
-  bit32_t input_exp = strm_in.read();
-  bit32_t input_key = strm_in.read();
-
+  bit32_t input_p = strm_in.read();
+  bit32_t input_q = strm_in.read();
+  bit32_t input_dp = strm_in.read();
+  bit32_t input_dq = strm_in.read();
+  bit32_t input_qinv = strm_in.read();
   // read two 32-bit input words into digit
   msg = input_msg;
-  exp = input_exp;
-  key = input_key;
+  p = input_p;
+  q = input_q;
+  dp = input_dp;
+  dq = input_dq;
+  qinv = input_qinv;
 
-  rsa_t result = power2(msg, exp, key);
+  rsa_t result = power2(msg, p, q, dp, dq, qinv);
   // write out the result
   strm_out.write(result);
 }
