@@ -1,10 +1,10 @@
 #=============================================================================
-# run.tcl 
+# run_decrypt.tcl 
 #=============================================================================
-# @brief: A Tcl script for synthesizing the baseline rsa system.
+# @brief: A Tcl script for synthesizing the rsa decrypt system.
 
 # Project name
-set hls_prj rsa.prj
+set hls_prj rsa_decrypt.prj
 
 # Open/reset the project
 open_project ${hls_prj} -reset
@@ -14,7 +14,7 @@ set_top dut
 
 # Add design and testbench files
 add_files rsa.cpp
-add_files -tb test_rsa.cpp
+add_files -tb test_rsa_decrypt.cpp
 
 open_solution "solution1"
 # Use Zynq device
