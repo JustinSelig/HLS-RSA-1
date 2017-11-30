@@ -96,7 +96,7 @@ void dut_crt(
     qinv((i + 1) * 32 - 1, i * 32) = input_qinv;
   }
 
-  rsa_t result = power2(msg, p, q, dp, dq, qinv);
+  rsa_t result = rsaCRT(msg, p, q, dp, dq, qinv);
   // write out the result
   for (int i = 0; i < KEY_SIZE / 32; i++) {
     strm_out.write(result((i + 1) * 32 - 1, i * 32));
@@ -218,7 +218,7 @@ rsa_t power2(rsa_t x, rsa_t y, rsa_t p)
 
  L1 : while (y > 0)
     {
-#pragma HLS loop_tripcount max=32
+#pragma HLS loop_tripcount max=8
 #pragma HLS PIPELINE
         // If y is odd, multiply x with result
         if (y & 1)
