@@ -6,6 +6,10 @@
 #ifndef TYPEDEFS_H
 #define TYPEDEFS_H
 
+
+// Max uint size can be larger than defualt 1024
+#define AP_INT_MAX_W (2048)
+
 #include "ap_int.h"
 #include "ap_fixed.h"
 
