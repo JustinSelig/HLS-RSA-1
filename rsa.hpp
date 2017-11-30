@@ -91,4 +91,6 @@ rsa_t rsaCRT(rsa_t x, rsa_t p, rsa_t q, rsa_t dp, rsa_t dq, rsa_t qinv);
 rsa_t mod_inv(rsa_t a, rsa_t b);
 
 void dut(hls::stream<bit32_t> &strm_in, hls::stream<bit32_t> &strm_out);
+
+void dut_crt(hls::stream<bit32_t> &strm_in, hls::stream<bit32_t> &strm_out);
 #endif /* __RSA_HPP__ */
