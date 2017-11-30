@@ -54,9 +54,9 @@ int main() {
 //    encTimer.stop();
 
     // Precompute values for decryption
-    rsa_t dp = sk.d % (sk.p - 1);
-    rsa_t dq = sk.d % (sk.q - 1);
-    rsa_t qinv = mod_inv(sk.q, sk.p);
+    rsa_t dp = private_keys.d % (private_keys.p - 1);
+    rsa_t dq = private_keys.d % (private_keys.q - 1);
+    rsa_t qinv = mod_inv(private_keys.q, private_keys.p);
     
     decTimer.start();
     // Send values to be decrypted
