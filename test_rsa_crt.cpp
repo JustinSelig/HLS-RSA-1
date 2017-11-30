@@ -52,14 +52,21 @@ int main() {
 //      encrypted[i] = rsa_out.read();
 //    }
 //    encTimer.stop();
+
+    // Precompute values for decryption
+    rsa_t dp = sk.d % (sk.p - 1);
+    rsa_t dq = sk.d % (sk.q - 1);
+    rsa_t qinv = mod_inv(sk.q, sk.p);
     
     decTimer.start();
     // Send values to be decrypted
     for (int i = 0; i < NUM_TESTS; i++) {
       rsa_in.write(encrypted[i]);
-      rsa_in.write(private_keys.d);
-      rsa_in.write(private_keys.n);
-      //      decrypted[i] = decrypt(encrypted[i], &private_keys);
+      rsa_in.write(private_keys.p);
+      rsa_in.write(private_keys.q);
+      rsa_in.write(dp);
+      rsa_in.write(dq);
+      rsa_in.write(qinv);
     }
 
     // retrieve decrypted values
@@ -78,6 +85,6 @@ int main() {
     }
 
     if (numWrong > 0) {
-        std::cout << "There are " << numWrong << " wrong encryption/decryptions" << std::endl;
+        std::cout << "There are " << numWrong << " wrong crt encryption/decryptions" << std::endl;
     }
 }
