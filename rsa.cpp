@@ -14,18 +14,32 @@ void dut(
   rsa_t exp;
   rsa_t key;
 
-  bit32_t input_msg = strm_in.read();
-  bit32_t input_exp = strm_in.read();
-  bit32_t input_key = strm_in.read();
+  // Read in the msg
+  bit32_t input_msg;
+  for (int i = 0; i < KEY_SIZE / 32; i++) {
+    input_msg = strm_in.read();
+    msg((i + 1) * 32 - 1, i * 32) = input_msg;
+  }
 
-  // read two 32-bit input words into digit
-  msg = input_msg;
-  exp = input_exp;
-  key = input_key;
+  // Read in the exponent
+  bit32_t input_exp;
+  for (int i = 0; i < KEY_SIZE / 32; i++) {
+    input_exp = strm_in.read();
+    exp((i + 1) * 32 - 1, i * 32) = input_exp;
+  }
+
+  // Read in the key
+  bit32_t input_key;
+  for (int i = 0; i < KEY_SIZE / 32; i++) {
+    input_key = strm_in.read();
+    key((i + 1) * 32 - 1, i * 32) = input_key;
+  }
 
   rsa_t result = power2(msg, exp, key);
   // write out the result
-  strm_out.write(result);
+  for (int i = 0; i < KEY_SIZE / 32; i++) {
+    strm_out.write(result((i + 1) * 32 - 1, i * 32));
+  }
 }
 
 void dut_crt(
@@ -40,23 +54,53 @@ void dut_crt(
   rsa_t dq;
   rsa_t qinv;
 
-  bit32_t input_msg = strm_in.read();
-  bit32_t input_p = strm_in.read();
-  bit32_t input_q = strm_in.read();
-  bit32_t input_dp = strm_in.read();
-  bit32_t input_dq = strm_in.read();
-  bit32_t input_qinv = strm_in.read();
-  // read two 32-bit input words into digit
-  msg = input_msg;
-  p = input_p;
-  q = input_q;
-  dp = input_dp;
-  dq = input_dq;
-  qinv = input_qinv;
+  // Read in the msg
+  bit32_t input_msg;
+  for (int i = 0; i < KEY_SIZE / 32; i++) {
+    input_msg = strm_in.read();
+    msg((i + 1) * 32 - 1, i * 32) = input_msg;
+  }
+
+  // Read in the p
+  bit32_t input_p;
+  for (int i = 0; i < KEY_SIZE / 32; i++) {
+    input_p = strm_in.read();
+    p((i + 1) * 32 - 1, i * 32) = input_p;
+  }
+
+  // Read in the q
+  bit32_t input_q;
+  for (int i = 0; i < KEY_SIZE / 32; i++) {
+    input_q = strm_in.read();
+    q((i + 1) * 32 - 1, i * 32) = input_q;
+  }
+
+  // Read in dp
+  bit32_t input_dp;
+  for (int i = 0; i < KEY_SIZE / 32; i++) {
+    input_dp = strm_in.read();
+    dp((i + 1) * 32 - 1, i * 32) = input_dp;
+  }
+
+  // Read in dq
+  bit32_t input_dq;
+  for (int i = 0; i < KEY_SIZE / 32; i++) {
+    input_dq = strm_in.read();
+    dq((i + 1) * 32 - 1, i * 32) = input_dq;
+  }
+
+  // Read in qinv
+  bit32_t input_qinv;
+  for (int i = 0; i < KEY_SIZE / 32; i++) {
+    input_qinv = strm_in.read();
+    qinv((i + 1) * 32 - 1, i * 32) = input_qinv;
+  }
 
   rsa_t result = power2(msg, p, q, dp, dq, qinv);
   // write out the result
-  strm_out.write(result);
+  for (int i = 0; i < KEY_SIZE / 32; i++) {
+    strm_out.write(result((i + 1) * 32 - 1, i * 32));
+  }
 }
 
 

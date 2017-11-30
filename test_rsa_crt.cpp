@@ -26,32 +26,15 @@ int main() {
 
     for (int i = 0; i < NUM_TESTS; i++) {
         // Get random message to encrypt
-        //toEnc[i] = rng();
         toEnc[i] = rand() % 10; //random int from 0-9
     }
 
-//    Timer encTimer("Encryption time");
-    Timer decTimer("Decryption time");
+    Timer decTimer("CRT Decryption time");
 
-    // Encrypt our values
-//    encTimer.start();
-
-    // Send data to be encrypted
+    // encrypt our data
     for (int i = 0; i < NUM_TESTS; i++) {
-//      rsa_in.write(toEnc[i]);
-//      rsa_in.write(publicKeys.e);
-//      rsa_in.write(publicKeys.n);
       encrypted[i] = encrypt(toEnc[i], &publicKeys);
     }
-
-    // Get our encryped values back
-//    for (int i = 0; i < NUM_TESTS; i++) {
-//      dut(rsa_in, rsa_out);
-
-      // Read and store result
-//      encrypted[i] = rsa_out.read();
-//    }
-//    encTimer.stop();
 
     // Precompute values for decryption
     rsa_t dp = private_keys.d % (private_keys.p - 1);
@@ -60,19 +43,54 @@ int main() {
     
     decTimer.start();
     // Send values to be decrypted
-    for (int i = 0; i < NUM_TESTS; i++) {
-      rsa_in.write(encrypted[i]);
-      rsa_in.write(private_keys.p);
-      rsa_in.write(private_keys.q);
-      rsa_in.write(dp);
-      rsa_in.write(dq);
-      rsa_in.write(qinv);
+    for (int j = 0; j < NUM_TESTS; j++) {
+
+      // Send the message
+      rsa_t sendMsg = encrypted[j];
+      for (int i = 0; i < KEY_SIZE / 32; i++) {
+	rsa_in.write(sendMsg((i + 1) * 32 - 1, i * 32));
+      }
+
+      // Send p
+      rsa_t sendP = private_keys.p;
+      for (int i = 0; i < KEY_SIZE / 32; i++) {
+	rsa_in.write(sendP((i + 1) * 32 - 1, i * 32));
+      }
+
+      // Send q
+      rsa_t sendQ = private_keys.q;
+      for (int i = 0; i < KEY_SIZE / 32; i++) {
+	rsa_in.write(sendQ((i + 1) * 32 - 1, i * 32));
+      }
+
+      // Send dp
+      rsa_t sendDP = dp;
+      for (int i = 0; i < KEY_SIZE / 32; i++) {
+	rsa_in.write(sendDP((i + 1) * 32 - 1, i * 32));
+      }
+
+      // Send dq
+      rsa_t sendDQ = dq;
+      for (int i = 0; i < KEY_SIZE / 32; i++) {
+	rsa_in.write(sendDQ((i + 1) * 32 - 1, i * 32));
+      }
+
+      // Send qinv
+      rsa_t sendQinv = qinv;
+      for (int i = 0; i < KEY_SIZE / 32; i++) {
+	rsa_in.write(sendQinv((i + 1) * 32 - 1, i * 32));
+      }
     }
 
     // retrieve decrypted values
-    for (int i = 0; i < NUM_TESTS; i++) {
-      dut(rsa_in, rsa_out);
-      decrypted[i] = rsa_out.read();
+    for (int j = 0; j < NUM_TESTS; j++) {
+      dut_crt(rsa_in, rsa_out);
+      // Read and store result
+      rsa_t result;
+      for (int i = 0; i < KEY_SIZE / 32; i++) {
+	result((i + 1) * 32 - 1, i * 32) = rsa_out.read();
+      }
+      decrypted[j] = result;
     }
     decTimer.stop();
 
