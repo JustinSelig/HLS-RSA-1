@@ -30,28 +30,28 @@ int main() {
         toEnc[i] = rand() % 10; //random int from 0-9
     }
 
-    Timer encTimer("Encryption time");
+//    Timer encTimer("Encryption time");
     Timer decTimer("Decryption time");
 
     // Encrypt our values
-    encTimer.start();
+//    encTimer.start();
 
     // Send data to be encrypted
     for (int i = 0; i < NUM_TESTS; i++) {
-      rsa_in.write(toEnc[i]);
-      rsa_in.write(publicKeys.e);
-      rsa_in.write(publicKeys.n);
-      //      encrypted[i] = encrypt(toEnc[i], &publicKeys);
+//      rsa_in.write(toEnc[i]);
+//      rsa_in.write(publicKeys.e);
+//      rsa_in.write(publicKeys.n);
+      encrypted[i] = encrypt(toEnc[i], &publicKeys);
     }
 
     // Get our encryped values back
-    for (int i = 0; i < NUM_TESTS; i++) {
-      dut(rsa_in, rsa_out);
+//    for (int i = 0; i < NUM_TESTS; i++) {
+//      dut(rsa_in, rsa_out);
 
       // Read and store result
-      encrypted[i] = rsa_out.read();
-    }
-    encTimer.stop();
+//      encrypted[i] = rsa_out.read();
+//    }
+//    encTimer.stop();
     
     decTimer.start();
     // Send values to be decrypted

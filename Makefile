@@ -16,8 +16,8 @@ CFLAGS = -g -I${VHLS_INC} -ansi
 
 all: csim
 
-csim: rsa.cpp test_rsa.cpp
-	@echo "Compiling & simulating rsa on amdpool ..."
+csim: rsa.cpp test_rsa_encrypt.cpp
+	@echo "Compiling & simulating rsa with test_rsa_encrypt on amdpool ..."
 	g++ ${CFLAGS} $^ -o rsa -lrt
 	./rsa
 
@@ -34,6 +34,18 @@ bitstream:
 vivado:
 	@echo "Run Vivado csim and HLS"
 	vivado_hls -f run.tcl
+
+encrypt: test_rsa_encrypt.cpp
+	@echo "Run Vivado encrypt and HLS"
+	vivado_hls -f run_encrypt.tcl
+
+decrypt: test_rsa_decrypt.cpp
+	@echo "Run Vivado decrypt and HLS"
+	vivado_hls -f run_decrypt.tcl
+
+crt: test_rsa_crt.cpp
+	@echo "Run Vivado crt and HLS"
+	vivado_hls -f run_crt.tcl
 
 clean:
 	rm -rf rsa *.dat *.prj *.log

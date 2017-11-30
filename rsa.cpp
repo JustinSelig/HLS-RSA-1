@@ -28,6 +28,29 @@ void dut(
   strm_out.write(result);
 }
 
+void dut_crt(
+    hls::stream<bit32_t> &strm_in,
+    hls::stream<bit32_t> &strm_out
+)
+{
+  rsa_t msg;
+  rsa_t exp;
+  rsa_t key;
+
+  bit32_t input_msg = strm_in.read();
+  bit32_t input_exp = strm_in.read();
+  bit32_t input_key = strm_in.read();
+
+  // read two 32-bit input words into digit
+  msg = input_msg;
+  exp = input_exp;
+  key = input_key;
+
+  rsa_t result = power2(msg, exp, key);
+  // write out the result
+  strm_out.write(result);
+}
+
 
 
 int gcd(rsa_t a, rsa_t h) {
@@ -144,6 +167,7 @@ rsa_t power2(rsa_t x, rsa_t y, rsa_t p)
  L1 : while (y > 0)
     {
 #pragma HLS loop_tripcount max=32
+#pragma HLS PIPELINE
         // If y is odd, multiply x with result
         if (y & 1)
             res = (res*x) % p;
