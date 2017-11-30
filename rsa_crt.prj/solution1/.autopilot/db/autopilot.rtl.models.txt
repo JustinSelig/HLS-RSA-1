@@ -1,3 +1,0 @@
-dut_urem_32ns_32ns_32_36
-dut_mul_32s_32s_32_6
-dut
